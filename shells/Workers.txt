@@ -1,0 +1,41 @@
+db.createCollection("Workers",{
+validator:{
+$jsonSchema: {
+    bsonType: "object",
+required: [ "WorkerID", "WorkerFName", "WorkerLName", "WorkerAddres","WorkerFhone","WorkerMail","isActive"],
+properties: {
+WorkerID: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+WorkerFName: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+WorkerLName: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+WorkerAddres: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+WorkerFhone: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+WorkerMail: {
+bsonType: "string",
+description: "must be a string and is required"
+},
+isActive: {
+bsonType: "bool",
+major:true,
+description: "must be a string and is required"
+}
+
+}
+}
+}
+})
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allStyles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+
+function getNamesAndFhone()
+  {
+    $.post("http://localhost:3000/Workers/getNamesAndFhone",
+      function(data){
+        data.forEach(element => {
+        if(element.isActive==true)
+        {document.getElementById("results").innerHTML+="<li>"+" שם פרטי: "+element.WorkerFName+" פלאפון: "+element.WorkerFhone+"</li>"; } 
+        });
+      });
+  }
+  function showemployee()  
+  {  
+    var WorkerID=document.getElementById('getWorkerId1').value;
+        console.log('start get worker deetails.');
+        $.ajax({
+            url:"http://localhost:3000/workers/showemployee",
+            data:{WorkerID:WorkerID},
+            type:"get",
+            success:function(data){
+                document.getElementById('tz').value=data.WorkerID;
+                document.getElementById('firstName').value=data.WorkerFName;
+                document.getElementById('lastName').value=data.WorkerLName;
+                document.getElementById('WorkerAddres').value=data.WorkerAddres;
+                document.getElementById('WorkerFhone').value=data.WorkerFhone;
+                document.getElementById('WorkerMail').value=data.WorkerMail;
+                console.log('I succeeded.')
+                document.getElementById('getWorkerId1').value="";  
+            },
+            error:function(err){
+                console.log('Error in get!');
+            }
+            
+        });
+    }
+
+
+function addWorkers(){
+var WorkerID=$('#tz').val();
+var WorkerFName=$('#firstName').val();
+var WorkerLName=$('#lastName').val();
+var WorkerAddres=$('#WorkerAddres').val();
+var WorkerFhone=$('#WorkerFhone').val();
+var WorkerMail=$('#WorkerMail').val();
+
+$.post("http://localhost:3000/Workers/addWorkers",
+  {
+    WorkerID: WorkerID,
+    WorkerFName: WorkerFName,
+    WorkerLName:WorkerLName,
+    WorkerAddres:WorkerAddres,
+    WorkerFhone: WorkerFhone,
+    WorkerMail: WorkerMail
+  },
+  function(data, status){
+    alert("Data: " + data + "\Worker: " + status);
+  });
+
+}
+function deletWorkerByID(){
+        var WorkerID=document.getElementById('getWorkerId2').value;
+        console.log("start delete worker.");
+        $.ajax({
+        url:"http://localhost:3000/Workers/deletWorkerByID",
+        data:{WorkerID:WorkerID},
+        type:"post",
+        success:function(data){
+         alert("Success");
+        },
+        error:function(err){
+         alert("Error");
+     }    
+    });
+    }
+
+function UpdateWorkers()
+  {
+    var WorkerID=$('#tz').val();
+var WorkerFName=$('#firstName').val();
+var WorkerLName=$('#lastName').val();
+var WorkerAddres=$('#WorkerAddres').val();
+var WorkerFhone=$('#WorkerFhone').val();
+var WorkerMail=$('#WorkerMail').val();
+
+$.post("http://localhost:3000/Workers/UpdateWorkers",
+  {
+    WorkerID: WorkerID,
+    WorkerFName: WorkerFName,
+    WorkerLName:WorkerLName,
+    WorkerAddres:WorkerAddres,
+    WorkerFhone: WorkerFhone,
+    WorkerMail: WorkerMail
+  },
+  function(data, status){
+    alert("Data: " + data + "\Worker: " + status);
+                document.getElementById('tz').value=" ";
+                document.getElementById('firstName').value=" ";
+                document.getElementById('lastName').value="";
+                document.getElementById('WorkerAddres').value="";
+                document.getElementById('WorkerFhone').value="";
+                document.getElementById('WorkerMail').value="";
+  });
+
+  }
+
+</script>
+</head>
+<body>
+<h1>All workers</h1>
+<div class="body">
+    <div id="placeForTable"></div>
+    <form class="form-inline">
+        <div class="form-group myFormGroup">
+        <div style="padding: 8px;">
+          <input type="button"  class="btn btn-outline-success" style="padding: 8px;" onclick="getNamesAndFhone()" value="show All Employee "> 
+          <div id="results"></div>
+          </div>
+          <p id="placeForTable"></p></div>
+         <br>
+<div class="form-group myFormGroup">
+   <b> <label for="getWorkerId1">workers id: </label>
+    <input id="getWorkerId1" type="text" class="form-control"></b>
+  <div style="padding: 8px;">
+  <input type="button" class="btn btn-outline-success" style="padding: 8px;" onclick="showemployee()" value="Get Worker Details">
+</div></div>
+
+<div class="form-group myFormGroup">
+<b><label for="getWorkerId2">workers id: </label> 
+<input id="getWorkerId2" type="text" class="form-control"></b>
+      <div style="padding: 8px;">
+        <input type="button" class="btn btn-outline-success"  onclick="deletWorkerByID()" value="delet WorkerByID"> 
+    </div></div>
+    
+      <div class="form-group myFormGroup">
+        <b>
+        <label for="tz">Id: </label>
+        <input id="tz" class="form-control" type="text"  placeholder="enter id">
+        <label for="firstName"> First name: </label>
+        <input id="firstName"  class="form-control" type="text" placeholder="enter first name">
+        <label for="lastName"> Last name: </label>
+        <input id="lastName"  class="form-control" type="text" placeholder="enter last name">
+        <label for="WorkerAddres">Address: </label>
+        <input id="WorkerAddres" class="form-control" type="text" placeholder="enter address">
+        <label for="WorkerFhone"> Tel: </label>
+        <input id="WorkerFhone" class="form-control" type="text" placeholder="enter tel">
+        <label for="WorkerMail"> Email: </label>
+        <input id="WorkerMail" class="form-control" type="text" placeholder="enter mail">
+        </b><br> 
+        <div style="padding: 8px;">
+        <input type="button" class="btn btn-outline-success" style="padding: 8px;" onclick="addWorkers()" value="Add Worker">
+        <input type="button" class="btn btn-outline-success" style="padding: 8px;" onclick="UpdateWorkers()" value="Edit Worker">
+    </div>
+</div>
+     <div class="form-group myFormGroup">
+        <div style="padding: 8px;">
+          <button class="btn btn-outline-success" type="button"><a href="PresenceEmployee.html">Presence Employee</a></button>
+          </div></div>
+    </form>
+ </div>   
+</body>
+</html>

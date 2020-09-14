@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allStyles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function goToWorker(){
+        $.ajax({
+        url:"http://localhost:3000/htmlworkers",
+        // data:jobDay,
+        // type:"post",
+        success:function(data){
+         alert("Success");
+        },
+        error:function(err){
+         alert("Error");
+         }
+         });
+    }
+
+</script>
+</head>
+<body>
+    <h1>Managing employee attendance   <small>by express server</small></h6>
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline">
+          <button class="btn btn-outline-success" type="button"><a href="workers.html">Workers</a></button>
+          <button class="btn btn-outline-success" type="button"><a href="PresenceEmployee.html">Presence Employee</a></button>
+        </form>
+      </nav>
+      <h3 style="color: dodgerblue;">Choose the desirable service</h3>
+</body>
